@@ -1,0 +1,20 @@
+:root {
+    --bg-color-dark: #2C2C2C;
+    --first-color-dark: #1E1E1E;
+    --second-color-dark: #8dd5c3;
+    --third-color-dark: #3DCCA0;
+    --font-color-dark: #ededed;
+    --font2-color-dark: #070707;
+    --font-family: sans-serif;
+}
+
+body {
+    background-color: var(--bg-color-dark);
+    color: var(--font-color-dark);
+    font-family: var(--font-family);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
