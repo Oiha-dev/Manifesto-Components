@@ -20,6 +20,12 @@
 </script>
 
 <style>
+    .component {
+        padding: 1em;
+        border-radius: 8px;
+        background-color: var(--first-color-dark);
+    }
+
     .select-container {
         position: relative;
         width: 100%;
