@@ -1,14 +1,3 @@
-<div class="component">
-    <div class="select-container">
-        <select bind:value={selectedValue} class="select-input">
-            {#each options as option}
-                <option value={option.value}>{option.label}</option>
-            {/each}
-        </select>
-        <div class="select-arrow">▼</div>
-    </div>
-</div>
-
 <script>
     export let options = [
         { value: "1", label: "Option 1" },
@@ -17,7 +6,37 @@
     ];
 
     let selectedValue = options[0].value;
+    let showOptions = false;
+
+    $: selectedValueLabel = options.find(option => option.value === selectedValue)?.label;
+
+    function toggleDropdown() {
+        showOptions = !showOptions;
+    }
+
+    function selectOption(option) {
+        selectedValue = option.value;
+        showOptions = false;
+    }
 </script>
+
+<div class="component">
+    <div class="select-container">
+        <div class="dropdown" on:click={toggleDropdown}>
+            <div class="selected-option">{selectedValueLabel}</div>
+            <div class="select-arrow">▼</div>
+        </div>
+        {#if showOptions}
+            <div class="options-list">
+                {#each options as option}
+                    <div class="option-item" on:click={() => selectOption(option)}>
+                        {option.label}
+                    </div>
+                {/each}
+            </div>
+        {/if}
+    </div>
+</div>
 
 <style>
     .component {
@@ -31,41 +50,44 @@
         width: 100%;
     }
 
-    .select-input {
-        appearance: none;
-        -webkit-appearance: none;
+    .dropdown {
         width: 100%;
         padding: 10px 30px 10px 15px;
         border-radius: 19px;
         font-size: 16px;
-        border: none;
         background-color: var(--third-color-dark);
         border-bottom: 4px solid var(--bg-color-dark);
         color: white;
         cursor: pointer;
-    }
-
-    .select-input:focus {
-        outline: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .select-arrow {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-70%);
         pointer-events: none;
         color: var(--font-color-dark);
         font-size: 14px;
     }
 
-    .select-input::placeholder {
-        color: white;
-        font-style: italic;
+    .options-list {
+        position: absolute;
+        width: 100%;
+        background-color: var(--first-color-dark);
+        border: 1px solid var(--bg-color-dark);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 1000;
+        margin-top: 5px;
+        border-radius: 8px;
     }
 
-    .select-input option {
-        background-color: var(--first-color-dark);
-        color: var(--font-color-dark);
+    .option-item {
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+    .option-item:hover {
+        background-color: var(--third-color-dark);
+        border-radius: 4px;
     }
 </style>
